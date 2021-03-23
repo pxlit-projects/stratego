@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.12" />
+    <PackageReference Include="NSwag.AspNetCore" Version="13.10.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Stratego.AppLogic\Stratego.AppLogic.csproj" />
+    <ProjectReference Include="..\Stratego.Common\Stratego.Common.csproj" />
+    <ProjectReference Include="..\Stratego.Domain\Stratego.Domain.csproj" />
+    <ProjectReference Include="..\Stratego.Infrastructure\Stratego.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
