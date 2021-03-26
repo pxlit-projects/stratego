@@ -1,4 +1,5 @@
 ﻿using System;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using Moq;
 using NUnit.Framework;
@@ -8,6 +9,7 @@ using Stratego.Domain.BoardDomain.Contracts;
 
 namespace Stratego.AppLogic.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "BoardDtoFactory", @"Stratego.AppLogic\Dto\BoardDtoFactory.cs;Stratego.AppLogic\Dto\BoardDto.cs")]
     public class BoardDtoFactoryTests
     {
         private static readonly Random RandomGenerator = new Random();

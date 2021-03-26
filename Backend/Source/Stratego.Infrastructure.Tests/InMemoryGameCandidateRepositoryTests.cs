@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using Moq;
 using NUnit.Framework;
@@ -10,6 +11,7 @@ using Stratego.TestTools.Builders;
 
 namespace Stratego.Infrastructure.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "GameCandidateRepo", @"Stratego.Infrastructure\Storage\InMemoryGameCandidateRepository.cs")]
     public class InMemoryGameCandidateRepositoryTests
     {
         private static readonly Random RandomGenerator = new Random();

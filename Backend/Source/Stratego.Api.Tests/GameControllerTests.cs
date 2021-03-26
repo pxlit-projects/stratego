@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ using Stratego.TestTools.Builders;
 
 namespace Stratego.Api.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "GameCtlr", @"Stratego.Api\Controllers\GameController.cs")]
     public class GameControllerTests
     {
         private GameController _controller;

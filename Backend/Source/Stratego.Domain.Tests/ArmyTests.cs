@@ -6,11 +6,13 @@ using Stratego.TestTools.Builders;
 using System.Linq;
 using System.Reflection;
 using Castle.DynamicProxy.Internal;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using Stratego.TestTools;
 
 namespace Stratego.Domain.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "Army", @"Stratego.Domain\ArmyDomain\Army.cs")]
     public class ArmyTests
     {
         private static readonly Random RandomGenerator = new Random();

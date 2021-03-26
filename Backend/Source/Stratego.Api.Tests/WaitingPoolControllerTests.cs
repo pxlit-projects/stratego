@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using AutoMapper;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -18,6 +19,7 @@ using Stratego.TestTools.Builders;
 
 namespace Stratego.Api.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "WaitingPoolCtlr", @"Stratego.Api\Controllers\WaitingPoolController.cs")]
     public class WaitingPoolControllerTests
     {
         private WaitingPoolController _controller;

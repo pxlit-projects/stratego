@@ -9,11 +9,16 @@ using Stratego.TestTools.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Guts.Client.Core;
 using Moq;
 using Stratego.Domain.BoardDomain.Contracts;
 
 namespace Stratego.Domain.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "Board",
+        @"Stratego.Domain\BoardDomain\Board.cs;
+Stratego.Domain\BoardDomain\BoardSquare.cs;
+Stratego.Domain\BoardDomain\Move.cs")]
     public class BoardTests
     {
         private static readonly Random RandomGenerator = new Random();

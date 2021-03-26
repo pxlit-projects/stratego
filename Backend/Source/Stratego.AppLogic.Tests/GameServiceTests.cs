@@ -1,4 +1,5 @@
 ﻿using System;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using Moq;
 using NUnit.Framework;
@@ -14,6 +15,7 @@ using Stratego.TestTools.Builders;
 
 namespace Stratego.AppLogic.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "GameService", @"Stratego.AppLogic\GameService.cs")]
     public class GameServiceTests
     {
         private Mock<IGameFactory> _gameFactoryMock;

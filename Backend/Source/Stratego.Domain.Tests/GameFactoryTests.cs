@@ -1,4 +1,5 @@
-﻿using Guts.Client.Shared;
+﻿using Guts.Client.Core;
+using Guts.Client.Shared;
 using NUnit.Framework;
 using Stratego.Domain.ArmyDomain;
 using Stratego.Domain.BoardDomain;
@@ -7,6 +8,7 @@ using Stratego.TestTools.Builders;
 
 namespace Stratego.Domain.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "GameFactory", @"Stratego.Domain\GameFactory.cs")]
     public class GameFactoryTests
     {
         private GameFactory _factory;

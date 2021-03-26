@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using Moq;
 using NUnit.Framework;
@@ -10,6 +11,7 @@ using Stratego.TestTools.Builders;
 
 namespace Stratego.AppLogic.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "WaitingPool", @"Stratego.AppLogic\WaitingPool.cs")]
     public class WaitingPoolTests
     {
         private Mock<IGameCandidateFactory> _gameCandidateFactoryMock;

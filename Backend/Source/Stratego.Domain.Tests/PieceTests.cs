@@ -6,9 +6,20 @@ using Stratego.TestTools.Builders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Guts.Client.Core;
 
 namespace Stratego.Domain.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "Piece",
+        @"Stratego.Domain\ArmyDomain\Piece.cs;
+Stratego.Domain\ArmyDomain\MovablePiece.cs;
+Stratego.Domain\ArmyDomain\Sergeant.cs;
+Stratego.Domain\ArmyDomain\Lieutenant.cs;
+Stratego.Domain\ArmyDomain\Captain.cs;
+Stratego.Domain\ArmyDomain\Major.cs;
+Stratego.Domain\ArmyDomain\Colonel.cs;
+Stratego.Domain\ArmyDomain\General.cs;
+Stratego.Domain\ArmyDomain\Marshal.cs")]
     public class PieceTests
     {
         private static readonly Random Random = new Random();

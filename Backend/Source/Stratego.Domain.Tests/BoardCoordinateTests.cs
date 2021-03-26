@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using NUnit.Framework;
 using Stratego.Domain.BoardDomain;
 
 namespace Stratego.Domain.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "BoardCoordinate", @"Stratego.Domain\BoardDomain\BoardCoordinate.cs")]
     public class BoardCoordinateTests
     {
         private static readonly Random RandomGenerator = new Random();

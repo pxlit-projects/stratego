@@ -10,11 +10,13 @@ using Stratego.Domain.ArmyDomain.Contracts;
 using System;
 using System.Linq;
 using System.Reflection;
+using Guts.Client.Core;
 using Stratego.Domain.BoardDomain.Contracts;
 using Stratego.TestTools;
 
 namespace Stratego.Domain.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "Game", @"Stratego.Domain\Game.cs;Stratego.Domain\GameSettings.cs")]
     public class GameTests
     {
         private static readonly Random RandomGenerator = new Random();

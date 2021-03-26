@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using NUnit.Framework;
 using Stratego.Domain.Contracts;
@@ -7,6 +8,7 @@ using Stratego.TestTools.Builders;
 
 namespace Stratego.AppLogic.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "CandidateMatcher", @"Stratego.AppLogic\BasicGameCandidateMatcher.cs")]
     public class BasicGameCandidateMatcherTests
     {
         private static readonly Random RandomGenerator = new Random();

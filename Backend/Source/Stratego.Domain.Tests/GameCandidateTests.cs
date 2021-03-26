@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Guts.Client.Core;
 using Guts.Client.Shared;
 using Guts.Client.Shared.TestTools;
 using Microsoft.CodeAnalysis.CSharp;
@@ -11,6 +12,7 @@ using Stratego.TestTools.Builders;
 
 namespace Stratego.Domain.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "GameCandidate", @"Stratego.Domain\GameCandidate.cs")]
     public class GameCandidateTests
     {
         private User _user;

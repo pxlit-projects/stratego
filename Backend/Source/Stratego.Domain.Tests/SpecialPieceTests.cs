@@ -5,10 +5,17 @@ using Stratego.Domain.ArmyDomain.Contracts;
 using Stratego.TestTools.Builders;
 using System;
 using System.Collections.Generic;
+using Guts.Client.Core;
 using Stratego.TestTools;
 
 namespace Stratego.Domain.Tests
 {
+    [ProjectComponentTestFixture("1TINProject", "Stratego", "SpecialPiece",
+        @"Stratego.Domain\ArmyDomain\Flag.cs;
+Stratego.Domain\ArmyDomain\Bomb.cs;
+Stratego.Domain\ArmyDomain\Miner.cs;
+Stratego.Domain\ArmyDomain\Scout.cs;
+Stratego.Domain\ArmyDomain\Spy.cs")]
     public class SpecialPieceTests
     {
         [MonitoredTest("Bomb and Flag should not be moveable")]
