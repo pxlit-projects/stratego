@@ -30,6 +30,9 @@ namespace Stratego.Infrastructure.Storage
         {
             base.OnModelCreating(builder);
             builder.Entity<Friendship>().HasKey(f => new {f.Friend1Id, f.Friend2Id});
+
+            builder.Entity<Friendship>().HasOne(f => f.Friend1).WithMany().OnDelete(DeleteBehavior.NoAction);
+            builder.Entity<Friendship>().HasOne(f => f.Friend2).WithMany().OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
