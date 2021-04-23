@@ -39,7 +39,7 @@ namespace Stratego.Api.Controllers
         [HttpPost("register")]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             if (ModelState.IsValid)
@@ -66,15 +66,7 @@ namespace Stratego.Api.Controllers
                 }
             }
 
-            foreach (ModelStateEntry entry in ModelState.Values)
-            {
-                foreach (ModelError error in entry.Errors)
-                {
-                    return BadRequest(new ErrorModel(error.ErrorMessage));
-                }
-            }
-
-            throw new NotImplementedException();
+            return BadModel();
         }
 
         /// <summary>
@@ -87,9 +79,10 @@ namespace Stratego.Api.Controllers
         [AllowAnonymous]
         [ProducesResponseType(typeof(AccessPassModel), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateToken([FromBody] LoginModel model)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
+            if (!ModelState.IsValid) return BadModel();
 
             var user = await _userManager.FindByNameAsync(model.Email);
             if (user == null)
@@ -109,6 +102,18 @@ namespace Stratego.Api.Controllers
                 User = _mapper.Map<UserModel>(user)
             };
             return Ok(accessPass);
+        }
+
+        private BadRequestObjectResult BadModel()
+        {
+            foreach (ModelStateEntry entry in ModelState.Values)
+            {
+                foreach (ModelError error in entry.Errors)
+                {
+                    return BadRequest(new ErrorModel(error.ErrorMessage));
+                }
+            }
+            throw new InvalidOperationException("Invalid operation. Bad request returned when the input is valid.");
         }
     }
 }
