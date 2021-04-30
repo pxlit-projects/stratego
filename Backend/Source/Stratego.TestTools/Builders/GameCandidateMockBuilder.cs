@@ -1,4 +1,6 @@
 ﻿using System;
+using Moq;
+using Stratego.Common;
 using Stratego.Domain;
 using Stratego.Domain.Contracts;
 
@@ -15,6 +17,8 @@ namespace Stratego.TestTools.Builders
             Mock.SetupGet(c => c.GameSettings).Returns(settings);
             Mock.SetupProperty(c => c.GameId, Guid.Empty);
             Mock.SetupGet(c => c.ProposedOpponentUserId).Returns(Guid.Empty);
+            Mock.Setup(c => c.Challenge(It.IsAny<IGameCandidate>())).Returns(Result.CreateSuccessResult());
+            Mock.Setup(c => c.AcceptChallenge(It.IsAny<IGameCandidate>())).Returns(Result.CreateSuccessResult());
         }
 
         public GameCandidateMockBuilder WithUser(User user)
