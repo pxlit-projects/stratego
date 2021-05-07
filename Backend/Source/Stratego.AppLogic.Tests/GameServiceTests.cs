@@ -47,7 +47,7 @@ namespace Stratego.AppLogic.Tests
 
             _gameMock = new GameMockBuilder().Mock;
             _game = _gameMock.Object;
-            
+
 
             _gameFactoryMock.Setup(factory =>
                 factory.CreateNewForUsers(It.IsAny<User>(), It.IsAny<User>(), It.IsAny<GameSettings>())).Returns(_game);
@@ -147,9 +147,6 @@ namespace Stratego.AppLogic.Tests
             //Arrange
             Guid playerId = _game.RedPlayer.Id;
 
-            //Result expectedResult = Result.CreateSuccessResult();
-            //_gameMock.Setup(g => g.SetPlayerReady(It.IsAny<Guid>())).Returns(expectedResult);
-
             //Act
             _service.SetPlayerReady(_game.Id, playerId);
 
@@ -182,6 +179,9 @@ namespace Stratego.AppLogic.Tests
             _gameMock.Verify(g => g.MovePiece(playerId, pieceId, targetCoordinate), Times.Once,
                 "The 'MovePiece' method of the game is not called correctly.");
 
+            _gameMock.VerifyGet(g => g.LastMove, Times.Never,
+                "Is is not necessary to read the 'LastMove' property of the game. The last move is returned by the 'MovePiece' method of the game.");
+
             Assert.That(result.IsSuccess, Is.True, "A success result should be returned.");
 
             AssertMoveDtoEquality(result.Value, gameMoveResult.Value);
@@ -206,6 +206,7 @@ namespace Stratego.AppLogic.Tests
 
         private static void AssertMoveDtoEquality(MoveDto dto, Move move)
         {
+            Assert.That(dto, Is.Not.Null, "The move dto returned should not be null.");
             Assert.That(dto.To, Is.EqualTo(move.To),
                 "The move dto returned is not derived properly from the 'LastMove' of the game. Unexpected 'To' value.");
             Assert.That(dto.From, Is.EqualTo(move.From),
