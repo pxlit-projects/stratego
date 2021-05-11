@@ -77,6 +77,18 @@ Stratego.Domain\BoardDomain\Move.cs")]
                         $"The square [{i}][{j}] should not be marked as red home territory.");
                 }
             }
+
+            for (int i = 3; i < 5; i++)
+            {
+                for (int j = 0; j < _board.Size; j++)
+                {
+                    IBoardSquare neutralSquare = _board.Squares[i, j];
+                    Assert.That(neutralSquare.IsRedHomeTerritory, Is.False,
+                        $"The square [{i}][{j}] should not be marked as red home territory.");
+                    Assert.That(neutralSquare.IsBlueHomeTerritory, Is.False,
+                        $"The square [{i}][{j}] should not be marked as blue home territory.");
+                }
+            }
         }
 
         [MonitoredTest("Constructor - Quick game board - Should have 2 obstacles of 1 by 2")]
