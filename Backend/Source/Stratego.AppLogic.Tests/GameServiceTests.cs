@@ -76,7 +76,7 @@ namespace Stratego.AppLogic.Tests
         }
 
         [MonitoredTest("GetBoardDto - Should retrieve the game from the repository and extract a dto from it")]
-        public void GetBoardDto_Should_RetrieveTheGameFromTheRepositoryAndExtractADtoFromIt()
+        public void GetBoardDto_ShouldRetrieveTheGameFromTheRepositoryAndExtractADtoFromIt()
         {
             //Arrange
             var boardDto = new BoardDto();
@@ -96,7 +96,7 @@ namespace Stratego.AppLogic.Tests
         }
 
         [MonitoredTest("GetPlayerGameDto - Should retrieve the game from the repository and extract a dto from it")]
-        public void GetPlayerGameDto_Should_RetrieveTheGameFromTheRepositoryAndExtractADtoFromIt()
+        public void GetPlayerGameDto_ShouldRetrieveTheGameFromTheRepositoryAndExtractADtoFromIt()
         {
             //Arrange
             Guid playerId = _game.RedPlayer.Id;
@@ -117,7 +117,7 @@ namespace Stratego.AppLogic.Tests
         }
 
         [MonitoredTest("PositionPiece - Should retrieve the game from the repository and position the piece")]
-        public void PositionPiece_Should_RetrieveTheGameFromTheRepositoryAndPositionThePiece()
+        public void PositionPiece_ShouldRetrieveTheGameFromTheRepositoryAndPositionThePiece()
         {
             //Arrange
             Guid pieceId = Guid.NewGuid();
@@ -142,7 +142,7 @@ namespace Stratego.AppLogic.Tests
         }
 
         [MonitoredTest("SetPlayerReady - Should retrieve the game from the repository and mark the player as ready")]
-        public void SetPlayerReady_Should_RetrieveTheGameFromTheRepositoryAndMarkThePlayerAsReady()
+        public void SetPlayerReady_ShouldRetrieveTheGameFromTheRepositoryAndMarkThePlayerAsReady()
         {
             //Arrange
             Guid playerId = _game.RedPlayer.Id;
@@ -159,7 +159,7 @@ namespace Stratego.AppLogic.Tests
         }
 
         [MonitoredTest("MovePiece - Should retrieve the game from the repository and move the piece")]
-        public void MovePiece_Should_RetrieveTheGameFromTheRepositoryAndMoveThePiece()
+        public void MovePiece_ShouldRetrieveTheGameFromTheRepositoryAndMoveThePiece()
         {
             //Arrange
             Guid pieceId = Guid.NewGuid();
@@ -187,8 +187,35 @@ namespace Stratego.AppLogic.Tests
             AssertMoveDtoEquality(result.Value, gameMoveResult.Value);
         }
 
+        [MonitoredTest("MovePiece - Invalid move - Should return failure")]
+        public void MovePiece_InvalidMove_ShouldReturnFailure()
+        {
+            //Arrange
+            Guid pieceId = Guid.NewGuid();
+            Guid playerId = _game.BluePlayer.Id;
+            var targetCoordinate = new BoardCoordinateBuilder().Build();
+
+            string invalidMoveMessage = Guid.NewGuid().ToString();
+            Result<Move> gameMoveResult = Result<Move>.CreateFailureResult(invalidMoveMessage);
+            _gameMock.Setup(g => g.MovePiece(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<BoardCoordinate>())).Returns(gameMoveResult);
+
+            //Act
+            Result<MoveDto> result = _service.MovePiece(_game.Id, pieceId, playerId, targetCoordinate);
+
+            //Assert
+            _gameRepositoryMock.Verify(repo => repo.GetById(_game.Id), Times.Once,
+                "The 'GetById' method of the 'IGameRepository' is not called correctly.");
+
+            _gameMock.Verify(g => g.MovePiece(playerId, pieceId, targetCoordinate), Times.Once,
+                "The 'MovePiece' method of the game is not called correctly.");
+
+            Assert.That(result.IsSuccess, Is.False, "A failure result should be returned.");
+            Assert.That(result.Message, Is.EqualTo(invalidMoveMessage),
+                "The message of the failure result should be the same message returned by de 'MovePiece' method of the game.");
+        }
+
         [MonitoredTest("GetLastMove - Should retrieve the game from the repository and return the last move")]
-        public void GetLastMove_Should_RetrieveTheGameFromTheRepositoryAndReturnTheLastMove()
+        public void GetLastMove_ShouldRetrieveTheGameFromTheRepositoryAndReturnTheLastMove()
         {
             //Arrange
             Move lastMove = new MoveBuilder().WithTargetPiece().Build();

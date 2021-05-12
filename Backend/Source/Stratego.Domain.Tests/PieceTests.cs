@@ -61,7 +61,8 @@ Stratego.Domain\ArmyDomain\Marshal.cs")]
                 _captain,
                 _major,
                 _colonel,
-                _general
+                _general,
+                _marshal
             };
         }
 
@@ -83,14 +84,14 @@ Stratego.Domain\ArmyDomain\Marshal.cs")]
             Assert.That(_general.Name, Is.EqualTo("General"), "The general should have the Name property with value 'General'");
             Assert.That(_general.Strength, Is.EqualTo(9), "The general should have the Strength property with value 9");
 
-            Assert.That(_lieutenant.Name, Is.EqualTo("Lieutenant"), "The general should have the Name property with value 'Lieutenant'");
-            Assert.That(_lieutenant.Strength, Is.EqualTo(5), "The general should have the Strength property with value 5");
+            Assert.That(_lieutenant.Name, Is.EqualTo("Lieutenant"), "The lieutenant should have the Name property with value 'Lieutenant'");
+            Assert.That(_lieutenant.Strength, Is.EqualTo(5), "The lieutenant should have the Strength property with value 5");
 
             Assert.That(_major.Name, Is.EqualTo("Major"), "The major should have the Name property with value 'Major'");
             Assert.That(_major.Strength, Is.EqualTo(7), "The major should have the Strength property with value 7");
 
             Assert.That(_marshal.Name, Is.EqualTo("Marshal"), "The marshal should have the Name property with value 'Marshal'");
-            Assert.That(_marshal.Strength, Is.EqualTo(10), "The major should have the Strength property with value 10");
+            Assert.That(_marshal.Strength, Is.EqualTo(10), "The marshal should have the Strength property with value 10");
 
             Assert.That(_miner.Name, Is.EqualTo("Miner"), "The miner should have the Name property with value 'Miner'");
             Assert.That(_miner.Strength, Is.EqualTo(3), "The miner should have the Strength property with value 3");
@@ -118,14 +119,15 @@ Stratego.Domain\ArmyDomain\Marshal.cs")]
         public void MoveablePieceClasses_ShouldInheritFromMoveablePiece()
         {
             Assert.IsInstanceOf<MoveablePiece>(_captain, "The Captain class should inherit from the MoveablePiece class");
-            Assert.IsInstanceOf<MoveablePiece>(_colonel, "The Colonel class should not inherit from the MoveablePiece class");
-            Assert.IsInstanceOf<MoveablePiece>(_general, "The General class should not inherit from the MoveablePiece class");
-            Assert.IsInstanceOf<MoveablePiece>(_lieutenant, "The Lieutenant class should not inherit from the MoveablePiece class");
-            Assert.IsInstanceOf<MoveablePiece>(_major, "The Major class should not inherit from the MoveablePiece class");
-            Assert.IsInstanceOf<MoveablePiece>(_marshal, "The Marshal class should not inherit from the MoveablePiece class");
-            Assert.IsInstanceOf<MoveablePiece>(_scout, "The Scout class should not inherit from the MoveablePiece class"); Assert.IsInstanceOf<MoveablePiece>(_colonel, "The Flag class should not inhterit from the MoveablePiece class");
-            Assert.IsInstanceOf<MoveablePiece>(_sergeant, "The Sergeant class should not inherit from the MoveablePiece class");
-            Assert.IsInstanceOf<MoveablePiece>(_spy, "The Spy class should not inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_colonel, "The Colonel class should inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_general, "The General class should inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_lieutenant, "The Lieutenant class should inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_major, "The Major class should inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_marshal, "The Marshal class should inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_scout, "The Scout class should inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_colonel, "The Colonel class should inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_sergeant, "The Sergeant class should inherit from the MoveablePiece class");
+            Assert.IsInstanceOf<MoveablePiece>(_spy, "The Spy class should inherit from the MoveablePiece class");
         }
 
         [MonitoredTest("Attack - Against piece with lower strength - Should kill the other piece")]
@@ -133,7 +135,7 @@ Stratego.Domain\ArmyDomain\Marshal.cs")]
         {
             IPiece piece = SelectRandomPiece(out int selectedIndex);
             IPiece opponent = _normalPieces[Random.Next(0, selectedIndex)];
-            
+
             piece.Attack(opponent);
 
             Assert.That(piece.IsAlive, Is.True, $"'{piece.Name}' should be alive after attacking a '{opponent.Name}'.");
@@ -169,7 +171,7 @@ Stratego.Domain\ArmyDomain\Marshal.cs")]
 
         private IPiece SelectRandomPiece(out int selectedIndex)
         {
-            selectedIndex = Random.Next(1, _normalPieces.Count-1);
+            selectedIndex = Random.Next(1, _normalPieces.Count - 1);
             return _normalPieces[selectedIndex];
         }
     }
