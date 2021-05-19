@@ -127,6 +127,8 @@ namespace Stratego.AppLogic.Tests
             Assert.That(dto.OwnPlayerIsReady, Is.EqualTo(isRedPlayerReady),
                 $"'OwnPlayerIsReady' should be {isRedPlayerReady} when 'IsReady' property of the player is {isRedPlayerReady}.");
 
+            Assert.That(dto.OwnLivingPieces, Is.Not.Null, "'OwnLivingPieces' should not be null.");
+
             foreach (PieceDto pieceDto in dto.OwnLivingPieces)
             {
                 IPiece matchingPiece = ownLivingPieces.FirstOrDefault(p => p.Id == pieceDto.Id);
@@ -142,6 +144,9 @@ namespace Stratego.AppLogic.Tests
 
             gameMockBuilder.RedPlayerMockBuilder.ArmyMock.Verify(a => a.FindPieces(false), Times.Once,
                 "'FindPieces(false)' should have been called on the army of the player.");
+
+            Assert.That(dto.OwnFallenPieces, Is.Not.Null, "'OwnFallenPieces' should not be null.");
+
             foreach (PieceDto pieceDto in dto.OwnFallenPieces)
             {
                 IPiece matchingPiece = ownFallenPieces.FirstOrDefault(p => p.Id == pieceDto.Id);
@@ -187,6 +192,9 @@ namespace Stratego.AppLogic.Tests
 
             gameMockBuilder.BluePlayerMockBuilder.ArmyMock.Verify(a => a.FindPieces(false), Times.Once,
                 "'FindPieces(false)' should have been called on the army of the opponent.");
+
+            Assert.That(dto.OwnFallenPieces, Is.Not.Null, "'OpponentFallenPieces' should not be null.");
+
             foreach (PieceDto pieceDto in dto.OpponentFallenPieces)
             {
                 IPiece matchingPiece = opponentFallenPieces.FirstOrDefault(p => p.Id == pieceDto.Id);
@@ -205,6 +213,5 @@ namespace Stratego.AppLogic.Tests
             Assert.That(dto.OpponentArmyIsDefeated, Is.EqualTo(blueIsDefeated),
                 $"'OpponentArmyIsDefeated' should be {blueIsDefeated} when 'IsDefeated' property of the opponent army is {blueIsDefeated}.");
         }
-
     }
 }
