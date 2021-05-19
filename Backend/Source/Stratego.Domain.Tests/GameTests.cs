@@ -57,26 +57,34 @@ namespace Stratego.Domain.Tests
         [MonitoredTest("IsStarted - Should be true when both players are ready")]
         public void IsStarted_ShouldBeTrueWhenBothPlayersAreReady()
         {
-           //Arrange
-           var redPlayer = _redPlayerMockBuilder.Object;
-           var bluePlayer = _bluePlayerMockBuilder.Object;
-           var game = new Game(redPlayer, bluePlayer, _boardMock.Object);
+            //Arrange
+            var redPlayer = _redPlayerMockBuilder.WithIsReady(false).Object;
+            var bluePlayer = _bluePlayerMockBuilder.WithIsReady(false).Object;
+            var game = new Game(redPlayer, bluePlayer, _boardMock.Object);
 
-           //Act
-           bool isStarted = game.IsStarted;
+            //Set ready after construction
+            _redPlayerMockBuilder.WithIsReady(true);
+            _bluePlayerMockBuilder.WithIsReady(true);
 
-           //Assert
-           Assert.That(isStarted, Is.True);
+            //Act
+            bool isStarted = game.IsStarted;
+
+            //Assert
+            Assert.That(isStarted, Is.True);
         }
 
         [MonitoredTest("IsStarted - Should be false when a player is not ready")]
         public void IsStarted_ShouldBeFalseWhenAPlayerIsNotReady()
         {
             //Arrange
-            bool redIsReady = RandomGenerator.NextBool();
-            var redPlayer = _redPlayerMockBuilder.WithIsReady(redIsReady).Object;
-            var bluePlayer = _bluePlayerMockBuilder.WithIsReady(!redIsReady).Object;
+            var redPlayer = _redPlayerMockBuilder.WithIsReady(false).Object;
+            var bluePlayer = _bluePlayerMockBuilder.WithIsReady(false).Object;
             var game = new Game(redPlayer, bluePlayer, _boardMock.Object);
+
+            //Set (only one player) ready after construction
+            bool redIsReady = RandomGenerator.NextBool();
+            _redPlayerMockBuilder.WithIsReady(redIsReady);
+            _bluePlayerMockBuilder.WithIsReady(!redIsReady);
 
             //Act
             bool isStarted = game.IsStarted;
@@ -291,7 +299,7 @@ namespace Stratego.Domain.Tests
         {
             //Arrange
             Game game = CreateStartedGameForMove();
-            
+
             //Act
             var redPlayer = game.GetPlayerById(_redPlayerMockBuilder.Object.Id);
             var bluePlayer = game.GetPlayerById(_bluePlayerMockBuilder.Object.Id);
