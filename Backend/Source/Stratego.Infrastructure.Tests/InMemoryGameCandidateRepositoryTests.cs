@@ -59,6 +59,11 @@ namespace Stratego.Infrastructure.Tests
             challengerMock.Verify(c => c.CanChallenge(It.IsAny<IGameCandidate>()),
                 Times.AtLeast(challengeables.Count + unChallengeables.Count),
                 "The 'CanChallenge' method of the challenger should have been called multiple times.");
+
+            Assert.That(result.Count, Is.EqualTo(challengeables.Count),
+                "The amount of returned candidates is not correct " +
+                $"({challengeables.Count} out of {challengeables.Count + unChallengeables.Count + 1} could be challenged in this test run).");
+
             foreach (IGameCandidate candidate in result)
             {
                 Assert.That(challengeables.Contains(candidate), "At least one candidate that could be challenged is not returned.");
@@ -84,7 +89,7 @@ namespace Stratego.Infrastructure.Tests
                 unChallengeables.Add(candidate);
                 _repo.AddOrReplace(candidate);
             }
-            
+
             //Act
             IList<IGameCandidate> result = _repo.FindCandidatesThatCanBeChallengedBy(challenger.User.Id);
 
