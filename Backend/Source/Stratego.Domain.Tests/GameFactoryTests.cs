@@ -43,6 +43,8 @@ namespace Stratego.Domain.Tests
             Assert.That(game.BluePlayer.IsRed, Is.False, "The 'IsRed' of the blue player should be false.");
             Assert.That(game.BluePlayer.Army, Is.InstanceOf<Army>(), "The army of the blue player should be an instance of 'Army'.");
 
+            Assert.That(game.BluePlayer.Army, Is.Not.SameAs(game.RedPlayer.Army), "The red and blue player should not have the same 'Army' instance.");
+
             Assert.That(game.Board, Is.InstanceOf<Board>(), "The board should be an instance of 'Board'.");
         }
     }

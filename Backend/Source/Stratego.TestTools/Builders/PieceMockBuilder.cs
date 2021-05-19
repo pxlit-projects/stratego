@@ -1,6 +1,7 @@
 ﻿using Stratego.Domain.ArmyDomain.Contracts;
 using Stratego.Domain.BoardDomain;
 using System;
+using System.Linq;
 using Stratego.Domain.BoardDomain.Contracts;
 
 namespace Stratego.TestTools.Builders
@@ -59,6 +60,17 @@ namespace Stratego.TestTools.Builders
         public PieceMockBuilder WithRandomPositionOnBoard(IBoard board)
         {
             var position = new BoardCoordinateBuilder().Build();
+
+            if (board.Squares == null)
+            {
+                throw new ArgumentException("Cannot position a piece on a board without squares");
+            }
+
+            if (board.Squares.OfType<IBoardSquare>().All(s => s.IsObstacle || s.Piece != null))
+            {
+                throw new ArgumentException("Cannot position a piece on a board where all squares are either obstacles or occupied by a piece");
+            }
+
             while (board.Squares[position.Row, position.Column].IsObstacle ||
                    board.Squares[position.Row, position.Column].Piece != null)
             {
