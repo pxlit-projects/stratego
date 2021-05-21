@@ -18,12 +18,14 @@ namespace Stratego.Domain.Tests
         private User _user;
         private GameSettings _gameSettings;
         private GameCandidate _candidate;
+        private GameSettings _matchingGameSettings;
 
         [SetUp]
         public void Setup()
         {
             _user = new UserBuilder().Build();
             _gameSettings = new GameSettingsBuilder().WithAutoMatching(true).Build();
+            _matchingGameSettings = new GameSettingsBuilder().AsCopyOf(_gameSettings).Build();
             _candidate = new GameCandidate(_user, _gameSettings);
         }
 
@@ -41,7 +43,7 @@ namespace Stratego.Domain.Tests
         public void CanChallenge_ChallengerAlreadyInGame_ShouldReturnFailure()
         {
             //Arrange
-            IGameCandidate target = new GameCandidateMockBuilder().WithSettings(_gameSettings).Object;
+            IGameCandidate target = new GameCandidateMockBuilder().WithSettings(_matchingGameSettings).Object;
             _candidate.GameId = Guid.NewGuid();
 
             //Act
@@ -58,8 +60,8 @@ namespace Stratego.Domain.Tests
         public void CanChallenge_ChallengedCandidateAlreadyInGame_ShouldReturnFailure()
         {
             //Arrange
-            IGameCandidate target = new GameCandidateMockBuilder().WithSettings(_gameSettings).WithGameId().Object;
-            
+            IGameCandidate target = new GameCandidateMockBuilder().WithSettings(_matchingGameSettings).WithGameId().Object;
+
             //Act
             Result result = _candidate.CanChallenge(target);
 
@@ -106,7 +108,7 @@ namespace Stratego.Domain.Tests
         public void CanChallenge_AllValidationsPass_ShouldReturnSuccess()
         {
             //Arrange
-            IGameCandidate target = new GameCandidateMockBuilder().WithSettings(_gameSettings).Object;
+            IGameCandidate target = new GameCandidateMockBuilder().WithSettings(_matchingGameSettings).Object;
 
             //Act
             Result result = _candidate.CanChallenge(target);
@@ -127,7 +129,7 @@ namespace Stratego.Domain.Tests
                 .FirstOrDefault(md => md.Identifier.ValueText == "Challenge");
 
             Assert.That(method, Is.Not.Null, "Could not find the 'Challenge' method.");
-            
+
             var body = CodeCleaner.StripComments(method.Body.ToString());
 
             Assert.That(body, Contains.Substring("CanChallenge("),
@@ -138,7 +140,7 @@ namespace Stratego.Domain.Tests
         public void Challenge_ShouldSetTheProposedOpponentAndReturnSuccess()
         {
             //Arrange
-            IGameCandidate target = new GameCandidateMockBuilder().WithSettings(_gameSettings).Object;
+            IGameCandidate target = new GameCandidateMockBuilder().WithSettings(_matchingGameSettings).Object;
 
             //Act
             Result result = _candidate.Challenge(target);
@@ -172,7 +174,7 @@ namespace Stratego.Domain.Tests
         {
             //Arrange
             IGameCandidate challenger = new GameCandidateMockBuilder()
-                .WithSettings(_gameSettings)
+                .WithSettings(_matchingGameSettings)
                 .WithProposedOpponentUserId(_user.Id)
                 .Object;
             _candidate.GameId = Guid.NewGuid();
@@ -196,7 +198,7 @@ namespace Stratego.Domain.Tests
             //Arrange
             Guid otherUserId = Guid.NewGuid();
             IGameCandidate challenger = new GameCandidateMockBuilder()
-                .WithSettings(_gameSettings)
+                .WithSettings(_matchingGameSettings)
                 .WithProposedOpponentUserId(otherUserId)
                 .Object;
 
@@ -218,7 +220,7 @@ namespace Stratego.Domain.Tests
         {
             //Arrange
             IGameCandidate challenger = new GameCandidateMockBuilder()
-                .WithSettings(_gameSettings)
+                .WithSettings(_matchingGameSettings)
                 .WithProposedOpponentUserId(_user.Id)
                 .Object;
 

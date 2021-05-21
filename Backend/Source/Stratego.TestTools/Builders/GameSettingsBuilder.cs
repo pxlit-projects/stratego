@@ -10,8 +10,8 @@ namespace Stratego.TestTools.Builders
         {
             _settings = new GameSettings
             {
-                 AutoMatchCandidates = true,
-                 IsQuickGame = true
+                AutoMatchCandidates = true,
+                IsQuickGame = true
             };
         }
 
@@ -24,6 +24,13 @@ namespace Stratego.TestTools.Builders
         public GameSettingsBuilder WithIsQuickGame(bool value)
         {
             _settings.IsQuickGame = value;
+            return this;
+        }
+
+        public GameSettingsBuilder AsCopyOf(GameSettings otherSettings)
+        {
+            _settings.IsQuickGame = otherSettings.IsQuickGame;
+            _settings.AutoMatchCandidates = otherSettings.AutoMatchCandidates;
             return this;
         }
 
