@@ -75,7 +75,7 @@ namespace Stratego.Api.Controllers
         /// </summary>
         /// <param name="id">Id (guid) of the game</param>
         [HttpPost("{id}/ready")]
-        [ProducesResponseType(typeof(Result), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
         public IActionResult SetPlayerReady(Guid id)
