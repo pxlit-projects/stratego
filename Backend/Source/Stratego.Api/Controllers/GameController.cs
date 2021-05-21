@@ -178,5 +178,24 @@ namespace Stratego.Api.Controllers
             }
             return File(result.Value.Contents, "text/plain", result.Value.FileDownloadName);
         }
+
+        /// <summary>
+        /// Randomly positions all pieces of the army of the player
+        /// </summary>
+        /// <param name="id">Id (guid) of the game</param>
+        /// <remarks>This method is needed for an EXTRA. Not needed to implement the minimal requirements.</remarks>
+        [HttpPost("{id}/position-all-pieces")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ErrorModel), StatusCodes.Status400BadRequest)]
+        public IActionResult PositionAllPieces(Guid id)
+        {
+            //TODO
+            Result result = Result.CreateSuccessResult(); //TODO: call a method "PositionAllPieces" from IGameService that returns a Result
+            if (result.IsFailure)
+            {
+                return BadRequest(new ErrorModel(result.Message));
+            }
+            return Ok();
+        }
     }
 }
