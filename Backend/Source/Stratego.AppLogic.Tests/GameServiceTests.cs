@@ -240,7 +240,7 @@ namespace Stratego.AppLogic.Tests
                 "The move dto returned is not derived properly from the 'LastMove' of the game. Unexpected 'From' value.");
             Assert.That(dto.PlayerId, Is.EqualTo(move.PlayerId),
                 "The move dto returned is not derived properly from the 'LastMove' of the game. Unexpected 'PlayerId' value.");
-            Assert.That(dto.Piece.Id, Is.EqualTo(move.Piece.Id),
+            Assert.That(dto.Piece?.Id, Is.EqualTo(move.Piece?.Id),
                 "The move dto returned is not derived properly from the 'LastMove' of the game. Unexpected 'Piece' value.");
             Assert.That(dto.TargetPiece?.Id, Is.EqualTo(move.TargetPiece?.Id),
                 "The move dto returned is not derived properly from the 'LastMove' of the game. Unexpected 'TargetPiece' value.");
