@@ -70,11 +70,11 @@ namespace Stratego.Infrastructure.Storage
         public IList<User> GetUnconfirmedFriends(Guid userId)
         {
             var query = (from friendShip in _context.Friendships
-                    where friendShip.Friend1Id == userId && !friendShip.ConfirmedByFriend2
+                    where friendShip.Friend1Id == userId && !friendShip.ConfirmedByFriend1
                     select friendShip.Friend2)
                 .Union(
                     from friendShip in _context.Friendships
-                    where friendShip.Friend2Id == userId && !friendShip.ConfirmedByFriend1
+                    where friendShip.Friend2Id == userId && !friendShip.ConfirmedByFriend2
                     select friendShip.Friend1
                 );
 
