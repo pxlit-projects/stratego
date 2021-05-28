@@ -32,7 +32,7 @@ namespace Stratego.Infrastructure.Storage
             try
             {
                 User winner = _context.Users.Find(winnerUserId);
-                User loser = _context.Users.Find(winnerUserId);
+                User loser = _context.Users.Find(loserUserId);
 
                 int fromRank = Math.Min(loser.Rank, winner.Rank) - 1;
                 int toRank = Math.Max(loser.Rank, winner.Rank) + 1;
